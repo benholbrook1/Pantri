@@ -19,6 +19,9 @@ class ItemPack(UUIDBaseModel):
     def __str__(self):
         return self.name
 
+    class Meta:
+        db_table = 'item_pack'
+
 class Item(UUIDBaseModel):
     """
     Item model to store item information.

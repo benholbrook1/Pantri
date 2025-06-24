@@ -21,3 +21,6 @@ python manage.py makemigrations (from src directory)
 
 to apply migrations:
 python manage.py migrate (from src directory)
+
+to revert migrations (in DB, then we need to revert the model changes):
+python manage.py migrate pantri <migration_number> (from src directory)

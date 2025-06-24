@@ -20,7 +20,7 @@ class ItemPack(UUIDBaseModel):
         return self.name
 
     class Meta:
-        db_table = 'item_pack'
+        db_table = 'item_packs'
 
 class Item(UUIDBaseModel):
     """
@@ -31,3 +31,6 @@ class Item(UUIDBaseModel):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        db_table = 'items'

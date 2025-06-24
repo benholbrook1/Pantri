@@ -16,8 +16,11 @@ class StorageLocation(UUIDBaseModel):
     ], default='Dry')
     capacity = models.DecimalField(max_digits=3, decimal_places=0, default=Decimal(0), validators=PERCENTAGE_VALIDATOR)
 
+    class Meta:
+        db_table = 'storage_locations'
 
-class StoredItem(UUIDBaseModel):
+
+class StoreageLocationItem(UUIDBaseModel):
     """
     Model to store items in a storage location.
     """
@@ -26,3 +29,6 @@ class StoredItem(UUIDBaseModel):
 
     def __str__(self):
         return f"{self.item.name} in {self.storage_location.name}"
+
+    class Meta:
+        db_table = 'storage_location_items'

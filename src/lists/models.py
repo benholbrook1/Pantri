@@ -10,6 +10,9 @@ class List(UUIDBaseModel):
     def __str__(self):
         return self.name
 
+    class Meta:
+        db_table = 'lists'
+
 class ListItem(UUIDBaseModel):
     """Model to store items in a shopping list.
     """
@@ -19,3 +22,6 @@ class ListItem(UUIDBaseModel):
 
     def __str__(self):
         return f"{self.item.name} in {self.list.name}"
+
+    class Meta:
+        db_table = 'list_items'

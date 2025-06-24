@@ -1,5 +1,9 @@
 from django.db import models
 from core.models import UUIDBaseModel
+from decimal import Decimal
+from django.core.validators import MinValueValidator, MaxValueValidator
+
+PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(100)]
 
 # Create your models here.
 class StorageLocation(UUIDBaseModel):
@@ -10,7 +14,7 @@ class StorageLocation(UUIDBaseModel):
         ('Cold', 'Fridge'),
         ('Dry', 'Cupboard'),
     ], default='Dry')
-    capacity = models.PercentageField(default=100)
+    capacity = models.DecimalField(max_digits=3, decimal_places=0, default=Decimal(0), validators=PERCENTAGE_VALIDATOR)
 
 
 class StoredItem(UUIDBaseModel):

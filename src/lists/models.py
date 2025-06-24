@@ -6,7 +6,16 @@ class List(UUIDBaseModel):
     """List model to store shopping lists.
     """
     name = models.CharField(max_length=150, unique=True)
-    items = models.ManyToManyField('inventory.Item', through='ListItem')
 
     def __str__(self):
         return self.name
+
+class ListItem(UUIDBaseModel):
+    """Model to store items in a shopping list.
+    """
+    item = models.ForeignKey('inventory.Item', on_delete=models.CASCADE)
+    list = models.ForeignKey(List, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.item.name} in {self.list.name}"

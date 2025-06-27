@@ -13,14 +13,14 @@ pipenv shell   (from the project root directory)
 to install the dependencies:
 pipenv install
 
-to run the server:
-python manage.py runserver (from src directory)
+to run the server: (from src directory)
+python manage.py runserver
 
-to make migrations:
-python manage.py makemigrations (from src directory)
+to make migrations: (from src directory)
+python manage.py makemigrations 
 
-to apply migrations:
-python manage.py migrate (from src directory)
+to apply migrations: (from src directory)
+python manage.py migrate 
 
-to revert migrations (in DB, then we need to revert the model changes):
-python manage.py migrate pantri <migration_number> (from src directory)
+to revert migrations (in DB, then we need to revert the model changes): (from src directory)
+python manage.py migrate pantri <migration_number> 

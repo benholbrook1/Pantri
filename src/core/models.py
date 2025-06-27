@@ -3,7 +3,11 @@ import uuid
 
 # Create your models here.
 class UUIDBaseModel(models.Model):
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    def generate_uuid_str():
+        return str(uuid.uuid4())
+
+    uuid = models.CharField(primary_key=True, max_length=36, default=generate_uuid_str, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

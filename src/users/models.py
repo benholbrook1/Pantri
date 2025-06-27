@@ -12,7 +12,7 @@ class User(UUIDBaseModel):
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.username
+        return self.name
 
     class Meta:
         db_table = 'users'

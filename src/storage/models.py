@@ -14,21 +14,23 @@ class StorageLocation(UUIDBaseModel):
         ('Cold', 'Fridge'),
         ('Dry', 'Cupboard'),
     ], default='Dry')
-    capacity = models.DecimalField(max_digits=3, decimal_places=0, default=Decimal(0), validators=PERCENTAGE_VALIDATOR)
+    capacity = models.PositiveSmallIntegerField(default=0, validators=PERCENTAGE_VALIDATOR)
+    created_by = models.ForeignKey('users.User', on_delete=models.CASCADE, default='00000000-0000-0000-0000-000000000000', related_name='storage_locations')
 
     class Meta:
         db_table = 'storage_locations'
+        unique_together = ('name', 'created_by')
 
-
-class StoreageLocationItem(UUIDBaseModel):
+class StorageLocationItem(UUIDBaseModel):
     """
     Model to store items in a storage location.
     """
     item = models.ForeignKey('inventory.Item', on_delete=models.CASCADE)
-    storage_location = models.ForeignKey(StorageLocation, on_delete=models.CASCADE)
+    storage_location = models.ForeignKey(StorageLocation, on_delete=models.CASCADE, related_name='storage_locations')
 
     def __str__(self):
         return f"{self.item.name} in {self.storage_location.name}"
 
     class Meta:
         db_table = 'storage_location_items'
+        unique_together = ('item', 'storage_location')

@@ -22,8 +22,8 @@ PACK_UNIT_CHOICES = [
 
 class Item(UUIDBaseModel):
     name = models.CharField(max_length=150)
-    total_quantity = models.PositiveIntegerField(default=0)
-    remaining_percentage = models.PositiveSmallIntegerField(default=0, validators=PERCENTAGE_VALIDATOR)  
+    total_quantity = models.PositiveIntegerField(default=1)
+    remaining_percentage = models.PositiveSmallIntegerField(default=100, validators=PERCENTAGE_VALIDATOR)  
     pack_unit = models.CharField(max_length=5, choices=PACK_UNIT_CHOICES, default='EA')
     price_in_micros = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0)])
 

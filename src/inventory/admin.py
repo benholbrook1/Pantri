@@ -5,4 +5,3 @@ from . import models
 class ItemAdmin(admin.ModelAdmin):
     list_display = ('name', 'pack_unit', 'created_at')
 
-

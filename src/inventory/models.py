@@ -1,44 +1,36 @@
 from django.db import models
 from core.models import UUIDBaseModel
-from decimal import Decimal
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(100)]
-# Create your models here.
-
-class ItemPack(UUIDBaseModel):
-    """
-    ItemPack model to store item pack information.
-    """
-    name = models.CharField(max_length=150, unique=True)
-    total_quantity = models.PositiveIntegerField(default=0)
-    remaining_quantity = models.PositiveSmallIntegerField(default=0, validators=PERCENTAGE_VALIDATOR)   
-    pack_unit = models.CharField(max_length=50, default='pcs')
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        db_table = 'item_packs'
+PACK_UNIT_CHOICES = [
+    ('BX', 'BOX'),
+    ('PCS', 'PIECES'),
+    ('BG', 'BAG'),
+    ('CONT', 'CONTAINER'),
+    ('JR', 'JAR'),
+    ('EA', 'EACH'),
+    ('PK', 'PACK'),
+    ('JG', 'JUG'),
+    ('BT', 'BOTTLE'),
+    ('CAN', 'CAN'),
+    ('TUB', 'TUB'),
+    ('CT', 'Carton'),
+    ('SAC', 'Sack'),
+]
 
 class Item(UUIDBaseModel):
     name = models.CharField(max_length=150)
-    pack = models.ForeignKey(ItemPack, on_delete=models.CASCADE)
+    total_quantity = models.PositiveIntegerField(default=0)
+    remaining_percentage = models.PositiveSmallIntegerField(default=0, validators=PERCENTAGE_VALIDATOR)  
+    pack_unit = models.CharField(max_length=5, choices=PACK_UNIT_CHOICES, default='EA')
+    created_by = models.ForeignKey('users.User', on_delete=models.CASCADE, default='00000000-0000-0000-0000-000000000000')
+    price_in_micros = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0)])
 
     def __str__(self):
-        return f"{self.name} ({self.pack.name})"
+        return f"{self.name} ({self.pack_unit})"
 
     class Meta:
         db_table = 'items'
-        unique_together = ('name', 'pack')
-
-class CatalogItem(Item):
-    class Meta:
-        db_table = 'catalog_items'
-
-class UserItem(Item):
-    created_by = models.ForeignKey('users.User', on_delete=models.CASCADE, default='00000000-0000-0000-0000-000000000000', related_name='user_items')
-
-    class Meta:
-        db_table = 'user_items'
+        unique_together = ('name', 'pack_unit')

@@ -25,6 +25,8 @@ class StorageLocationItem(UUIDBaseModel):
     """
     item = models.ForeignKey('inventory.Item', on_delete=models.CASCADE)
     storage_location = models.ForeignKey(StorageLocation, on_delete=models.CASCADE, related_name='storage_locations')
+    quantity = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1)])
+    remaining_percentage = models.PositiveSmallIntegerField(default=100, validators=PERCENTAGE_VALIDATOR)
 
     def __str__(self):
         return f"{self.item.name} in {self.storage_location.name}"

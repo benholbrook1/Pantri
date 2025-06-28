@@ -3,5 +3,5 @@ from . import models
 
 @admin.register(models.Item) 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('name', 'pack_unit', 'created_at')
+    list_display = ('name', 'pack_unit', 'created_at', 'created_by')
 

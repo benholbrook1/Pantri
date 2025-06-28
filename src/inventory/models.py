@@ -16,8 +16,8 @@ PACK_UNIT_CHOICES = [
     ('BT', 'BOTTLE'),
     ('CAN', 'CAN'),
     ('TUB', 'TUB'),
-    ('CT', 'Carton'),
-    ('SAC', 'Sack'),
+    ('CT', 'CARTON'),
+    ('SAC', 'SACK'),
 ]
 
 class Item(UUIDBaseModel):
@@ -25,7 +25,6 @@ class Item(UUIDBaseModel):
     total_quantity = models.PositiveIntegerField(default=0)
     remaining_percentage = models.PositiveSmallIntegerField(default=0, validators=PERCENTAGE_VALIDATOR)  
     pack_unit = models.CharField(max_length=5, choices=PACK_UNIT_CHOICES, default='EA')
-    created_by = models.ForeignKey('users.User', on_delete=models.CASCADE, default='00000000-0000-0000-0000-000000000000')
     price_in_micros = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0)])
 
     def __str__(self):

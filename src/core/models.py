@@ -14,7 +14,7 @@ class UUIDBaseModel(models.Model):
         editable=False,
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey('users.User', on_delete=models.CASCADE, null=True, blank=True)
+    created_by = models.ForeignKey('users.User', on_delete=models.CASCADE, null=False, blank=True, editable=False)
 
     class Meta:
         abstract = True

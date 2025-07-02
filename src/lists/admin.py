@@ -1,4 +1,5 @@
 from django.contrib import admin 
+from core.admin import BaseModelAdmin
 from . import models
 
 
@@ -9,6 +10,6 @@ class ListItemInline(admin.TabularInline):  # or use admin.StackedInline for mor
     # autocomplete_fields = ['item']  # Optional: If your item list is long
 
 @admin.register(models.List)
-class ListAdmin(admin.ModelAdmin):
+class ListAdmin(BaseModelAdmin):
     list_display = ('name', 'created_by')
     inlines = [ListItemInline] 

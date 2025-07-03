@@ -8,19 +8,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('lists', '0003_alter_list_created_by_alter_listitem_created_by'),
+        ('inventory', '0003_alter_item_created_by'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='list',
-            name='created_by',
-            field=models.ForeignKey(blank=True, default=0, editable=False, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
-            preserve_default=False,
-        ),
-        migrations.AlterField(
-            model_name='listitem',
+            model_name='item',
             name='created_by',
             field=models.ForeignKey(blank=True, default=0, editable=False, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
             preserve_default=False,

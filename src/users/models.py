@@ -21,8 +21,12 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)
         
-        # Set created_by to None for superusers (or to themselves if you prefer)
-        extra_fields.setdefault('created_by', None)
+        system_user = User.objects.get(uuid='00000000-0000-0000-0000-000000000000')
+
+        extra_fields.setdefault('created_by', system_user)
+
+        if password is None:
+            raise ValueError('Superusers must have a password')
         
         return self.create_user(email, name, password, **extra_fields)
 
@@ -46,6 +50,12 @@ class User(AbstractBaseUser, PermissionsMixin, UUIDBaseModel):
     
     USERNAME_FIELD = 'email'  # Use email as the login field
     REQUIRED_FIELDS = ['name']  # Required when creating superuser
+
+    def save(self, *args, **kwargs):
+        if self.uuid == '00000000-0000-0000-0000-000000000000' and not self.created_by:
+            # System user can be its own creator
+            self.created_by = self
+        super().save(*args, **kwargs)
     
     def __str__(self):
         return self.name

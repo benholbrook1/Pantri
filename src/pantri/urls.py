@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 import debug_toolbar
 
-admin.site.site_header = 'Pantri Admin Page'
+admin.site.site_header = 'Admin Page'
 
 
 urlpatterns = [

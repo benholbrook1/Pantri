@@ -24,7 +24,7 @@ class StorageLocationAdmin(BaseModelAdmin):
 
 @admin.register(models.StorageLocationItem)
 class StorageLocationItemAdmin(BaseModelAdmin):
-    list_display = ('item', 'storage_location', 'quantity', 'remaining_percentage', 'created_by', 'created_at')
+    list_display = ('item', 'storage_location__name', 'quantity', 'created_by', 'created_at')
     list_filter = ('storage_location',)
     search_fields = ('item__name', 'storage_location__name')
     readonly_fields = ('created_at', 'created_by')

@@ -5,10 +5,10 @@ from . import models
 # Register your models here.
 @admin.register(models.User) 
 class UserAdmin(BaseModelAdmin):
-    list_display = ('uuid','created_at', 'name', 'is_active', 'is_superuser')
+    list_display = ('name', 'created_at', 'is_active', 'is_superuser')
     readonly_fields = ('uuid', 'created_at', 'last_login', 'created_by')
-    search_fields = ('name', 'is_superuser')
-    exclude = ('password', 'groups', 'user_permissions')  # Exclude password field for security reasons
+    search_fields = ('name',)
+    exclude = ('password', 'groups', 'user_permissions') 
 
     fields = (
         'uuid',

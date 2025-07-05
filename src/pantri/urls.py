@@ -24,5 +24,6 @@ admin.site.site_header = 'Admin Page'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/items/', include('inventory.urls')),
+    path('api/lists/', include('lists.urls')),
     path('__debug__/', include(debug_toolbar.urls)),
 ]

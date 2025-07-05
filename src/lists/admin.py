@@ -21,7 +21,10 @@ class ListItemInline(admin.TabularInline):
 class ListAdmin(BaseModelAdmin):
     list_display = ('name', 'created_by')
     inlines = [ListItemInline] 
+    search_fields = ('name', 'created_by__name')
 
 @admin.register(models.ListItem)
 class ListItemAdmin(BaseModelAdmin):
     list_display = ('item', 'list', 'quantity', 'created_by')
+    search_fields = ('item__name', 'list__name')
+    autocomplete_fields = ('item', 'list')

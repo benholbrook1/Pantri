@@ -19,6 +19,9 @@ class StorageLocation(UUIDBaseModel):
         db_table = 'storage_locations'
         # unique_together = ('name', 'created_by')
 
+    def __str__(self):
+        return f"{self.name} - ({self.storage_type})"
+
 class StorageLocationItem(UUIDBaseModel):
     """
     Model to store items in a storage location.

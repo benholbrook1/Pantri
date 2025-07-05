@@ -1,0 +1,7 @@
+from rest_framework import serializers
+from .models import PACK_UNIT_CHOICES # import the PACK_UNIT_CHOICES from models.py so it is consistent with the model definition
+
+class ItemSerializer(serializers.Serializer):
+    uuid = serializers.UUIDField(read_only=True)
+    name = serializers.CharField(max_length=150)
+    ppack_unit = serializers.CharField(max_length=5, choices=PACK_UNIT_CHOICES, default='EA')

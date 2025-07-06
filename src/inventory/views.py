@@ -13,7 +13,7 @@ def item_list(request):
     if request.method == 'GET':
         itemQueryset = Item.objects.all()
         serializer = ItemSerializer(itemQueryset, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     elif request.method == 'POST':
         serializer = ItemSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -22,9 +22,19 @@ def item_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
 
-@api_view()
+@api_view(['GET', "PATCH", "DELETE"])
 def item_detail(request, id):
     item = get_object_or_404(Item, pk=id)
-    serializer = ItemSerializer(item)
-    return Response(serializer.data)
+    if request.method == 'GET':
+        serializer = ItemSerializer(item)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    elif request.method == 'PATCH':
+        serializer = ItemSerializer(item, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK) 
+    elif request.method == 'DELETE':
+        item.is_active = False
+        item.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
    

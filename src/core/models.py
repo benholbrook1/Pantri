@@ -32,6 +32,7 @@ class UUIDBaseModel(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey('users.User', on_delete=models.CASCADE, null=False, blank=True, editable=False)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         abstract = True

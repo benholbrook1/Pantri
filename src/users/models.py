@@ -36,7 +36,6 @@ class User(AbstractBaseUser, PermissionsMixin, UUIDBaseModel):
     """
     name = models.CharField(max_length=150, unique=True)
     email = models.EmailField(unique=True)
-    is_active = models.BooleanField(default=True)
     password = models.CharField(max_length=128, blank=True, null=True)
 
     

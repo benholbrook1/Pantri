@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
+from rest_framework.mixins import ListModelMixin, CreateModelMixin
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -11,7 +12,7 @@ from .serializers import ItemSerializer
 
 class ItemList(APIView):
     def get(self, request):
-        itemQueryset = Item.objects.all()
+        itemQueryset = Item.objects.filter(is_active=True)
         serializer = ItemSerializer(itemQueryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
@@ -23,19 +24,25 @@ class ItemList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
 
-@api_view(['GET', "PATCH", "DELETE"])
-def item_detail(request, id):
-    item = get_object_or_404(Item, pk=id)
-    if request.method == 'GET':
+class ItemDetail(APIView):
+    def get(self, request, id):
+        item = get_object_or_404(Item, pk=id)
         serializer = ItemSerializer(item)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    elif request.method == 'PATCH':
+
+    def patch(self, request, id):
+        item = get_object_or_404(Item, pk=id)
         serializer = ItemSerializer(item, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK) 
-    elif request.method == 'DELETE':
+
+    def delete(self, request, id):
+        item = get_object_or_404(Item, pk=id)
         item.is_active = False
         item.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
    
